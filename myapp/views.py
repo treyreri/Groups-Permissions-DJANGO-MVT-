@@ -118,3 +118,58 @@ def lesson_delete(request, id):
         return redirect('lesson_list')
     return render(request, 'lesson_delete.html' , {'lesson' : lesson} )
 
+
+
+#comment
+@permission_required('myapp.view_comment', raise_exception=True)
+def comment_list(request):
+    comments = Comment.objects.all()
+    return render(request, 'comment_list.html', {'comments' : comments})
+
+@permission_required('myapp.view_comment' , raise_exception = True)
+def comment_detail(request, id):
+    comment = get_object_or_404(Comment, id = id)
+    return render(request, 'comment_detail.html' , {'comment' : comment})
+
+@permission_required('meapp.add_comment' , raise_exception = True)
+def comment_create(request, lesson_id):
+    lesson = get_object_or_404(Lesson, id = lesson_id)
+
+    if request.method == 'POST':
+        text = request.POST.get('text')
+
+        Comment.objects.create(text = text , user = request.user, lesson = lesson)
+        return redirect('lesson_detail' , id = lesson.id)
+    return render(request, 'comment_form.html', {'lesson' : lesson})
+
+@permission_required('myapp.change_comment', raise_exception=True)
+def comment_update(request, id):
+    comment = get_object_or_404(Comment, id = id)
+    #админ может редактировать дюбой коммент, остальные пользователи только свои коммы
+    if not request.user.is_superuser:
+        if comment.user != request.user:
+            from django.core.exceptions import PermissionDenied
+            raise PermissionDenied
+
+    if request.method == 'POST':
+        comment.text = request.POST.get('text')
+        comment.save()
+
+        return redirect('comment_detail' , id = comment.id)
+
+    return render(request, 'comment_form.html' , {'comment' : comment})
+
+@permission_required('myapp.delete_comment', raise_exception = True)
+def comment_delete(request, id):
+    comment = get_object_or_404(Comment, id = id)
+    #админ может удалить любой коммент, остальные пользователи только свои коммы
+    if not request.user.is_superuser:
+        if comment.user != request.user:
+            from django.core.exceptions import PermissionDenied
+            raise PermissionDenied
+
+    if request.method == 'POST':
+        comment.delete()
+        return redirect('comment_list')
+
+    return render(request, 'comment_delete.html' , {'comment' : comment})
