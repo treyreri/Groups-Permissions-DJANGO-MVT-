@@ -2,11 +2,12 @@ from django.urls import path
 
 from . import views
 
-urlpatterns = [
-    #home
-    path('', views.home, name = 'home') , 
 
-    #course
+urlpatterns = [
+    # home
+    path('', views.home, name='home'),
+
+    # course
     path('courses/', views.course_list, name='course_list'),
     path('courses/<int:id>/', views.course_detail, name='course_detail'),
     path('courses/create/', views.course_create, name='course_create'),
@@ -23,10 +24,7 @@ urlpatterns = [
     #comment
     path('comments/', views.comment_list, name='comment_list'),
     path('comments/<int:id>/', views.comment_detail, name='comment_detail'),
-    path ('lessons/<int:lesson_id>/comments/create/', views.comment_create, name='comment_create')
-
-    path ('lessons/<int:lesson_id>/comments/create/', views.comment_create, name='comment_create')
-
-    path('comments/<int:id>/update/', views.comment_update, name='comment_update')
-
-    path('comments/<int:id>/delete/',views.comment_delete,name='comment_delete') , ]
+    path('lessons/<int:lesson_id>/comments/create/', views.comment_create, name='comment_create' ),
+    path('comments/<int:id>/update/', views.comment_update, name='comment_update'),
+    path('comments/<int:id>/delete/', views.comment_delete, name='comment_delete'),
+]

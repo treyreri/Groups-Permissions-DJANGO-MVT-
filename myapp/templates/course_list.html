@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Courses</h1>
+    <a href="{% url 'home' %}">Home</a>
+    {% if perms.myapp.add_course %}
+    <p><a href="{% url 'course_create' %}">Create Course</a></p> {% endif %}
+
+    <hr>
+
+    {% for course in courses %}
+    <h2><a href="{% url 'course_detail' course.id %}">
+        {{ course.title }}
+    </a></h2>
+
+    <p>{{ course.description }}</p>
+    <p>Price : {{ course.price }}</p>
+
+    {% empty %} <p>No courses</p>
+    {% endfor %}
+
+</body>
+</html>
