@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lessons</title>
+</head>
+<body>
+
+<h1>Lessons</h1>
+<a href="{% url 'home' %}">Home</a>
+
+{% if perms.myapp.add_lesson %}
+    <p> <a href="{% url 'lesson_create' %}">  Create Lesson </a> </p>
+{% endif %}
+
+<hr>
+
+
+{% for lesson in lessons %}
+    <h2> <a href="{% url 'lesson_detail' lesson.id %}"> {{ lesson.title }} </a> </h2>
+
+    <p> Course : {{ lesson.course.title }} </p>
+
+{% empty %} <p>No lessons</p>
+{% endfor %}
+
+</body>
+</html>

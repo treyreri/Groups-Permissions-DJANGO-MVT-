@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ lesson.title }}</title>
+</head>
+<body>
+
+<a href="{% url 'lesson_list' %}">Back to Lessons</a>
+
+<h1>{{ lesson.title }}</h1>
+
+<p> Course : {{ lesson.course.title }} </p>
+
+<p>{{ lesson.content }}</p>
+
+{% if perms.myapp.change_lesson %} 
+<a href="{% url 'lesson_update' lesson.id %}"> Update lesson </a>
+{% endif %}
+
+{% if perms.myapp.delete_lesson %}
+<a href="{% url 'lesson_delete' lesson.id %}"> Delete lesson </a>
+{% endif %}
+
+<hr>
+
+
+<h2>Comments</h2>
+
+{% for comment in lesson.comments.all %}
+
+    <p> <strong>{{ comment.user.username }}</strong> </p>
+
+    <p>{{ comment.text }}</p>
+
+    <a href="{% url 'comment_detail' comment.id %}"> Open comment </a>
+
+    {% empty %} <p>No comments</p>
+
+{% endfor %}
+
+
+
+{% if perms.myapp.add_comment %}
+    <hr>
+    <a href="{% url 'comment_create' lesson.id %}"> Add comment </a>
+{% endif %}
+
+
+</body>
+</html>

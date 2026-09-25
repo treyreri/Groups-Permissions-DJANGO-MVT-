@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Comments</title>
+</head>
+<body>
+
+<h1>Comments</h1>
+<a href="{% url 'home' %}">Home</a>
+
+<hr>
+
+{% for comment in comments %}
+    <h3> {{ comment.user.username }} </h3>
+    <p> {{ comment.text }} </p>
+    <p> Lesson : {{ comment.lesson.title }} </p>
+    <a href="{% url 'comment_detail' comment.id %}"> Open </a>
+
+
+    {% empty %}<p>No comments </p>
+
+{% endfor %}
+
+</body>
+</html>

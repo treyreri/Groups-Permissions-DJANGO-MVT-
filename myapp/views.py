@@ -13,19 +13,19 @@ def home (request):
 
 
 #course
-@permission_required('myapp.view_course' , raise_exception = True)
+@permission_required('myapp.view_course')
 def course_list(request):
     courses = Course.objects.all()
     return render(request, 'course_list.html' , {'courses' : courses})
 
 
-@permission_required('myapp.view_course' , raise_exception = True)
+@permission_required('myapp.view_course')
 def course_detail(request, id):
     course = get_object_or_404(Course, id = id)
 
     return render(request, 'course_detail.html' , {'course' : course})
 
-@permission_required('myapp.add_course' , raise_exception = True)
+@permission_required('myapp.add_course' )
 def course_create(request):
     if request.method == 'POST':
         title = request.POST.get('title')
@@ -40,7 +40,7 @@ def course_create(request):
 
 
 
-@permission_required('myapp.change_course', raise_exception = True)
+@permission_required('myapp.change_course')
 def course_update(request, id):
     course = get_object_or_404(Course, id = id)
 
@@ -55,7 +55,7 @@ def course_update(request, id):
     return render(request, 'course_form.html', {'course' : course}) 
 
 
-@permission_required('myapp.delete_course' , raise_exception = True)
+@permission_required('myapp.delete_course' )
 def course_delete(request, id):
     course = get_object_or_404(Course, id= id)
 
@@ -67,18 +67,18 @@ def course_delete(request, id):
 
 
 #lesson
-@permission_required('myapp.view_lesson' , raise_exception = True)
+@permission_required('myapp.view_lesson' )
 def lesson_list(request):
     lessons = Lesson.objects.all()
 
     return render(request, 'lesson_list.html' , {'lessons' : lessons})
 
-@permission_required('myapp.view_lesson', raise_exception = True)
+@permission_required('myapp.view_lesson')
 def lesson_detail(request ,id):
     lesson = get_object_or_404(Lesson, id = id )
     return render (request, 'lesson_detail.html', {'lesson' : lesson})
 
-@permission_required('myapp.add_lesson', raise_exception = True)
+@permission_required('myapp.add_lesson')
 def lesson_create(request):
     courses = Course.objects.all()
 
@@ -93,7 +93,7 @@ def lesson_create(request):
         return redirect('lesson_list')
     return render(request, 'lesson_form.html' , {'courses' : courses})
 
-@permission_required('myapp.change_lesson', raise_exception=True)
+@permission_required('myapp.change_lesson')
 def lesson_update(request, id):
     lesson = get_object_or_404(Lesson, id = id)
     courses = Course.objects.all()
@@ -110,7 +110,7 @@ def lesson_update(request, id):
         return redirect('lesson_detail' , id = lesson.id)
     return render(request, 'lesson_form.html' , {'lesson' : lesson, 'courses' : courses})
 
-@permission_required('myapp.delete_lesson', raise_exception = True)
+@permission_required('myapp.delete_lesson')
 def lesson_delete(request, id):
     lesson = get_object_or_404(Lesson, id = id)
     if request.method == 'POST':
@@ -121,17 +121,17 @@ def lesson_delete(request, id):
 
 
 #comment
-@permission_required('myapp.view_comment', raise_exception=True)
+@permission_required('myapp.view_comment')
 def comment_list(request):
     comments = Comment.objects.all()
     return render(request, 'comment_list.html', {'comments' : comments})
 
-@permission_required('myapp.view_comment' , raise_exception = True)
+@permission_required('myapp.view_comment' )
 def comment_detail(request, id):
     comment = get_object_or_404(Comment, id = id)
     return render(request, 'comment_detail.html' , {'comment' : comment})
 
-@permission_required('meapp.add_comment' , raise_exception = True)
+@permission_required('meapp.add_comment' )
 def comment_create(request, lesson_id):
     lesson = get_object_or_404(Lesson, id = lesson_id)
 
@@ -142,7 +142,7 @@ def comment_create(request, lesson_id):
         return redirect('lesson_detail' , id = lesson.id)
     return render(request, 'comment_form.html', {'lesson' : lesson})
 
-@permission_required('myapp.change_comment', raise_exception=True)
+@permission_required('myapp.change_comment')
 def comment_update(request, id):
     comment = get_object_or_404(Comment, id = id)
     #админ может редактировать дюбой коммент, остальные пользователи только свои коммы
@@ -159,7 +159,7 @@ def comment_update(request, id):
 
     return render(request, 'comment_form.html' , {'comment' : comment})
 
-@permission_required('myapp.delete_comment', raise_exception = True)
+@permission_required('myapp.delete_comment')
 def comment_delete(request, id):
     comment = get_object_or_404(Comment, id = id)
     #админ может удалить любой коммент, остальные пользователи только свои коммы

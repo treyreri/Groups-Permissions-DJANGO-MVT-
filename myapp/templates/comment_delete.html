@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delete сomment</title>
+</head>
+<body>
+
+<h1>Delete сomment</h1>
+
+<p> {{ comment.text }} </p>
+
+<p> Are you sure ? </p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit"> Yes, delete </button>
+</form>
+
+
+<a href="{% url 'comment_detail' comment.id %}"> Cancel </a>
+
+</body>
+</html>

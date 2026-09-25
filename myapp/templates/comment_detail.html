@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Comment</title>
+</head>
+<body>
+
+<h1>Comment</h1>
+
+<p> Author : {{ comment.user.username }} </p>
+<p> {{ comment.text }}</p>
+
+<p>lesson : <a href="{% url 'lesson_detail' comment.lesson.id %}"> {{ comment.lesson.title }} </a> </p>
+
+
+
+{% if perms.myapp.change_comment %}
+
+    {% if request.user.is_superuser or request.user == comment.user %}
+        <a href="{% url 'comment_update' comment.id %}"> Edit comment </a>
+    {% endif %}
+
+{% endif %}
+
+
+
+
+{% if perms.myapp.delete_comment %}
+
+    {% if request.user.is_superuser or request.user == comment.user %}
+        <a href="{% url 'comment_delete' comment.id %}"> Delete comment </a>
+    {% endif %}
+
+{% endif %}
+
+</body>
+</html>

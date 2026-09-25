@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delete Lesson</title>
+</head>
+<body>
+
+<h1>Delete Lesson</h1>
+
+<p> Delete : <strong>{{ lesson.title }}</strong>? </p>
+
+<form method="post">
+
+    {% csrf_token %}
+
+    <button type="submit"> Yes, delete </button>
+
+</form>
+
+<a href="{% url 'lesson_detail' lesson.id %}"> Cancel </a>
+
+</body>
+</html>

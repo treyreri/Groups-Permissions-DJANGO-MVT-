@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Comment</title>
+</head>
+<body>
+
+<h1>
+    {% if comment %} Edit Comment
+    {% else %} Add Comment
+    {% endif %}
+</h1>
+
+
+<form method="post">
+    {% csrf_token %}
+    <textarea name="text" rows="5" cols="50"> {{ comment.text }} </textarea>
+
+    <br>
+
+    <button type="submit"> Save </button>
+
+</form>
+
+</body>
+</html>
